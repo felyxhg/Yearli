@@ -26,6 +26,14 @@
       color: #007aff;
       text-decoration: none;
     }
+    ul {
+      margin: 0.5rem 0;
+      padding-left: 1.5rem;
+    }
+    code {
+      font-size: 0.9em;
+      word-break: break-all;
+    }
   </style>
 </head>
 <body>
@@ -35,6 +43,30 @@
 
   <h2>Data Processing</h2>
   <p>The app <em>Yearli</em> displays a customizable annual view of your calendar events. Calendar data is read from Apple Calendar (via the device) and, if you connect your account, from Google Calendar via the Google Calendar API. All processing of calendar content happens on your device or through Google's services; the developer does not store or share any of your calendar data.</p>
+
+  <h2>Google User Data – Data Accessed</h2>
+  <p>When you connect your Google account, Yearli uses the <strong>Google Calendar API</strong> with read-only access (<code>https://www.googleapis.com/auth/calendar.readonly</code>). The application accesses the following types of Google user data:</p>
+  <ul>
+    <li><strong>Calendar list:</strong> Calendar ID, calendar name (summary), and background color for each calendar you choose to display.</li>
+    <li><strong>Events:</strong> For each calendar, the app accesses event ID, title, start and end date/time (or date for all-day events), location, description/notes, and a link to the event in Google Calendar.</li>
+  </ul>
+
+  <h2>Google User Data – Data Usage</h2>
+  <p>Google Calendar data is used solely to display a year-based calendar overview within the Yearli app and to support local features such as filtering, calendar selection, and profile-based views. This data is not used for advertising, profiling, or any purpose outside these app features.</p>
+
+  <h2>Google User Data – Data Sharing</h2>
+  <p>Google Calendar and event content (including calendar names, event titles, locations, and descriptions) is <strong>not shared with any third parties</strong>. The app uses PostHog for analytics; only anonymized usage data (e.g. which screens are viewed, that a calendar was connected as "Apple" or "Google", or app setting changes) is collected. No calendar lists, event titles, locations, descriptions, or other Google Calendar content is sent to PostHog or any other third party.</p>
+
+  <h2>Google User Data – Data Storage &amp; Protection</h2>
+  <p>All data obtained from the Google Calendar API is stored <strong>only on your device</strong> (in the app’s local database, e.g. via SwiftData on iOS). None of this data is uploaded to the developer’s servers or any other cloud service. Communication with the Google API uses HTTPS and OAuth 2.0; access is limited to a read-only token that you authorize.</p>
+
+  <h2>Google User Data – Data Retention &amp; Deletion</h2>
+  <p>Local copies of calendar data remain on your device until you remove them. To stop the app from accessing your Google Calendar and to delete your data:</p>
+  <ul>
+    <li><strong>Revoke access in your Google account:</strong> In your <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener noreferrer">Google Account settings</a> (Security → Third-party apps with account access, or “Apps connected to your account”), remove Yearli to revoke its access to your Google Calendar. The app will then no longer be able to fetch new data.</li>
+    <li><strong>Uninstall the app</strong> or <strong>delete the app’s data</strong> to delete all locally stored data on your device, including data that originated from Google Calendar.</li>
+  </ul>
+  <p>For privacy-related questions, contact <a href="mailto:support@felixhaag.com">support@felixhaag.com</a>.</p>
 
   <h2>Analytics and Usage Data</h2>
   <p>The app does not use any tracking or profiling tools. Only anonymized analytics are collected: aggregated usage statistics provided by Apple through App Store Connect (such as installation numbers or crash reports), as well as anonymous usage analytics processed by <a href="https://posthog.com" target="_blank" rel="noopener noreferrer">PostHog</a>. PostHog collects anonymized or pseudonymized data (such as an anonymized identifier) to understand how the app is used. None of this data contains personally identifiable information. For more on PostHog's practices, see <a href="https://posthog.com/privacy" target="_blank" rel="noopener noreferrer">PostHog's privacy policy</a>.</p>
