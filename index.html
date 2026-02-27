@@ -3,43 +3,297 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Yearli – Annual Calendar View</title>
+  <title>Yearli – Your Year at a Glance</title>
   <style>
-    :root { color-scheme: light dark; }
+    :root {
+      color-scheme: light dark;
+      --bg: #fff;
+      --text: #111;
+      --muted: #555;
+      --border: #e8e8ed;
+      --link: #0071e3;
+      --accent: #0071e3;
+      --card: #f5f5f7;
+      --hero-bg: linear-gradient(180deg, #f5f5f7 0%, #fff 100%);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #000;
+        --text: #f5f5f7;
+        --muted: #a1a1a6;
+        --border: #424245;
+        --link: #2997ff;
+        --accent: #2997ff;
+        --card: #1d1d1f;
+        --hero-bg: linear-gradient(180deg, #1d1d1f 0%, #000 100%);
+      }
+    }
+    * {
+      box-sizing: border-box;
+    }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      margin: 0; min-height: 100svh; display: grid; place-items: center;
-      background: #fff; color: #111; padding: 2rem;
+      margin: 0;
+      min-height: 100svh;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
-    main { max-width: 720px; width: 100%; }
-    h1 { margin: 0 0 0.5rem; font-size: 1.8rem; }
-    p { margin: 0 0 1rem; line-height: 1.6; }
-    a { color: #007aff; text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    .card {
-      border: 1px solid #e5e5e5; border-radius: 12px; padding: 1.25rem;
+    .page {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 0 1.5rem 3rem;
     }
-    .links { margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #e5e5e5; }
-    .links ul { margin: 0; padding: 0; list-style: none; }
-    .links li { margin: 0.5rem 0; }
+
+    /* Hero – full-width gradient, content centered */
+    .hero-wrap {
+      width: 100vw;
+      margin-left: calc(50% - 50vw);
+      background: var(--hero-bg);
+      border-radius: 0 0 2rem 2rem;
+      margin-bottom: 2rem;
+    }
+    .hero {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 3.5rem;
+      text-align: center;
+    }
+    .hero .logo {
+      width: 120px;
+      height: 120px;
+      display: block;
+      margin: 0 auto 1.25rem;
+      border-radius: 26px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+    @media (prefers-color-scheme: dark) {
+      .hero .logo { box-shadow: 0 4px 24px rgba(0,0,0,0.35); }
+    }
+    .hero h1 {
+      margin: 0 0 0.5rem;
+      font-size: 2.75rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .hero .tagline {
+      font-size: 1.35rem;
+      color: var(--muted);
+      margin: 0 0 1.5rem;
+      font-weight: 400;
+    }
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.25rem;
+      background: var(--accent);
+      color: #fff !important;
+      border-radius: 980px;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: opacity 0.2s;
+    }
+    .cta:hover {
+      opacity: 0.9;
+      text-decoration: none;
+    }
+
+    /* Intro / Purpose */
+    .intro {
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto 3rem;
+    }
+    .intro p {
+      font-size: 1.2rem;
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* Features */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 3rem;
+    }
+    .features > h2 {
+      grid-column: 1 / -1;
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin: 0 0 0.25rem;
+    }
+    .feature {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+    }
+    .feature h3 {
+      margin: 0 0 0.5rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+    .feature p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* Trust / Google data (required) */
+    .trust {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+    .trust h2 {
+      font-size: 1.35rem;
+      font-weight: 600;
+      margin: 0 0 1rem;
+    }
+    .trust p {
+      margin: 0 0 0.75rem;
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .trust p:last-of-type {
+      margin-bottom: 0;
+    }
+    .trust ul {
+      margin: 0.5rem 0 1rem;
+      padding-left: 1.25rem;
+    }
+    .trust li {
+      margin-bottom: 0.35rem;
+      line-height: 1.5;
+    }
+    .trust a {
+      color: var(--link);
+      text-decoration: none;
+    }
+    .trust a:hover {
+      text-decoration: underline;
+    }
+    .trust code {
+      font-size: 0.85em;
+      word-break: break-all;
+      background: var(--border);
+      padding: 0.15em 0.4em;
+      border-radius: 6px;
+    }
+
+    /* Footer */
+    .footer {
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+    .footer p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .footer a {
+      color: var(--link);
+      text-decoration: none;
+    }
+    .footer a:hover {
+      text-decoration: underline;
+    }
+    .footer nav ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      gap: 1.25rem;
+    }
   </style>
 </head>
 <body>
-  <main class="card" role="main" aria-labelledby="title">
-    <h1 id="title">Yearli</h1>
-    <p>
-      Yearli is an iOS app that shows a customizable annual view of your calendar. Connect Apple Calendar and Google Calendar to see all your events at a glance.
-    </p>
-    <p>
-      Developed by <strong>Felix Haag</strong>. Available on the <a href="https://apps.apple.com/app/id6744540608" target="_blank" rel="noopener noreferrer">App Store</a>.
-    </p>
-    <nav class="links" aria-label="Legal and support">
-      <ul>
-        <li><a href="/privacy-policy/">Privacy Policy</a></li>
-        <li><a href="/terms-of-use/">Terms of Use</a></li>
-        <li><a href="/support/">Support</a></li>
-      </ul>
-    </nav>
-  </main>
+  <div class="page">
+    <main role="main" aria-labelledby="title">
+      <div class="hero-wrap">
+        <header class="hero">
+          <img src="assets/logo.png" alt="Yearli app icon" class="logo" width="120" height="120" />
+        <h1 id="title">Yearli</h1>
+        <p class="tagline">Your year at a glance</p>
+          <a href="https://apps.apple.com/app/id6744540608" class="cta" target="_blank" rel="noopener noreferrer">Download on the App Store</a>
+        </header>
+      </div>
+
+      <section class="intro" aria-labelledby="intro-heading">
+        <h2 id="intro-heading" class="visually-hidden">What is Yearli?</h2>
+        <p>
+          Yearli is an iOS app that shows your entire year in one view. Connect Apple Calendar and Google Calendar to see all your events at a glance—plan and review your schedule without the clutter.
+        </p>
+      </section>
+
+      <section class="features" aria-labelledby="features-heading">
+        <h2 id="features-heading">Features</h2>
+        <div class="feature">
+          <h3>Year view</h3>
+          <p>A single, customizable view of your calendar across the full year.</p>
+        </div>
+        <div class="feature">
+          <h3>Apple &amp; Google Calendar</h3>
+          <p>Works with Apple Calendar and Google Calendar in one place.</p>
+        </div>
+        <div class="feature">
+          <h3>Filter &amp; choose</h3>
+          <p>Pick which calendars to show and filter events your way.</p>
+        </div>
+        <div class="feature">
+          <h3>Multiple views</h3>
+          <p>Switch between different views for work, personal, or custom setups.</p>
+        </div>
+      </section>
+
+      <section class="trust" aria-labelledby="trust-heading">
+        <h2 id="trust-heading">Your data stays yours</h2>
+        <p>
+          If you connect Google Calendar, Yearli asks for <strong>read-only</strong> access (<code>https://www.googleapis.com/auth/calendar.readonly</code>). We use it only to show your events in the app and to power features like filtering and different views. Your calendar data is processed on your device and is <strong>not stored or shared</strong> by us.
+        </p>
+        <p>
+          For full details, see our <a href="/privacy-policy/">Privacy Policy</a>.
+        </p>
+      </section>
+
+      <footer class="footer">
+        <p>By <strong>Felix Haag</strong></p>
+        <nav aria-label="Legal and support">
+          <ul>
+            <li><a href="/privacy-policy/">Privacy Policy</a></li>
+            <li><a href="/terms-of-use/">Terms of Use</a></li>
+            <li><a href="/support/">Support</a></li>
+          </ul>
+        </nav>
+      </footer>
+    </main>
+  </div>
+  <style>
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+  </style>
 </body>
 </html>
